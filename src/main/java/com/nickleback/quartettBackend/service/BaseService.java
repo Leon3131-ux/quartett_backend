@@ -5,15 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public class BaseService<T> {
+public class BaseService<T, R> {
 
-    private final JpaRepository<T, Long> repository;
+    private final JpaRepository<T, R> repository;
 
-    public BaseService(JpaRepository<T, Long> repository){
+    public BaseService(JpaRepository<T, R> repository){
         this.repository = repository;
     }
 
-    public Optional<T> getById(Long id){
+    public Optional<T> getById(R id){
         return repository.findById(id);
     }
 
@@ -21,7 +21,7 @@ public class BaseService<T> {
         return repository.findAll();
     }
 
-    public void deleteById(Long id){
+    public void deleteById(R id){
         repository.deleteById(id);
     }
 

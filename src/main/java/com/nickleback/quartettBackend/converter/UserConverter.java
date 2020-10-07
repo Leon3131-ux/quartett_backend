@@ -3,6 +3,7 @@ package com.nickleback.quartettBackend.converter;
 import com.nickleback.quartettBackend.domain.Role;
 import com.nickleback.quartettBackend.domain.User;
 import com.nickleback.quartettBackend.dto.SignUpDto;
+import com.nickleback.quartettBackend.dto.UserDto;
 import com.nickleback.quartettBackend.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,10 @@ public class UserConverter {
         Optional<Role> userRole = roleRepository.findByName("USER");
         userRole.ifPresent(roles::add);
         return new User(signUpDto.getUsername(), bCryptPasswordEncoder.encode(signUpDto.getPassword()), roles);
+    }
+
+    public UserDto toDto(User user){
+        return new UserDto(user.getUsername());
     }
 
 }
