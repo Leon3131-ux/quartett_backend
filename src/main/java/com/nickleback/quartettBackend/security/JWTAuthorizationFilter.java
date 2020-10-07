@@ -1,4 +1,4 @@
-package com.nickleback.boilerplate.security;
+package com.nickleback.quartettBackend.security;
 
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.JWT;

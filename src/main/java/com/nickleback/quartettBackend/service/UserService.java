@@ -1,7 +1,7 @@
-package com.nickleback.boilerplate.service;
+package com.nickleback.quartettBackend.service;
 
-import com.nickleback.boilerplate.domain.User;
-import com.nickleback.boilerplate.repository.UserRepository;
+import com.nickleback.quartettBackend.domain.User;
+import com.nickleback.quartettBackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

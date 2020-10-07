@@ -1,4 +1,4 @@
-package com.nickleback.boilerplate.dto;
+package com.nickleback.quartettBackend.dto;
 
 import lombok.Data;
 

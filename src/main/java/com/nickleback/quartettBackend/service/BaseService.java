@@ -1,4 +1,4 @@
-package com.nickleback.boilerplate.service;
+package com.nickleback.quartettBackend.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

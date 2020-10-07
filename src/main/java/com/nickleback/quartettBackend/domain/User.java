@@ -1,4 +1,4 @@
-package com.nickleback.boilerplate.domain;
+package com.nickleback.quartettBackend.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,9 +1,8 @@
-package com.nickleback.boilerplate.domain;
+package com.nickleback.quartettBackend.domain;
 
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity

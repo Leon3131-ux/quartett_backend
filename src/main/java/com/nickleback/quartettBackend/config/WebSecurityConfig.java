@@ -1,9 +1,9 @@
-package com.nickleback.boilerplate.config;
+package com.nickleback.quartettBackend.config;
 
-import com.nickleback.boilerplate.security.JWTAuthenticationFilter;
-import com.nickleback.boilerplate.security.JWTAuthorizationFilter;
-import com.nickleback.boilerplate.security.SecurityConstants;
-import com.nickleback.boilerplate.service.UserDetailsServiceImp;
+import com.nickleback.quartettBackend.security.JWTAuthenticationFilter;
+import com.nickleback.quartettBackend.security.JWTAuthorizationFilter;
+import com.nickleback.quartettBackend.security.SecurityConstants;
+import com.nickleback.quartettBackend.service.UserDetailsServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

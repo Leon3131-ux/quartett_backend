@@ -1,6 +1,6 @@
-package com.nickleback.boilerplate.repository;
+package com.nickleback.quartettBackend.repository;
 
-import com.nickleback.boilerplate.domain.Role;
+import com.nickleback.quartettBackend.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

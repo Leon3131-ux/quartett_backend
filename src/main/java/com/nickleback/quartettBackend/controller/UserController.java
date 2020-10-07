@@ -1,11 +1,11 @@
-package com.nickleback.boilerplate.controller;
+package com.nickleback.quartettBackend.controller;
 
-import com.nickleback.boilerplate.converter.UserConverter;
-import com.nickleback.boilerplate.domain.User;
-import com.nickleback.boilerplate.dto.SignUpDto;
-import com.nickleback.boilerplate.security.SecurityConstants;
-import com.nickleback.boilerplate.service.UserService;
-import com.nickleback.boilerplate.validator.SignUpValidator;
+import com.nickleback.quartettBackend.converter.UserConverter;
+import com.nickleback.quartettBackend.domain.User;
+import com.nickleback.quartettBackend.dto.SignUpDto;
+import com.nickleback.quartettBackend.security.SecurityConstants;
+import com.nickleback.quartettBackend.service.UserService;
+import com.nickleback.quartettBackend.validator.SignUpValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

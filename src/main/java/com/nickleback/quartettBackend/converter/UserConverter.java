@@ -1,9 +1,9 @@
-package com.nickleback.boilerplate.converter;
+package com.nickleback.quartettBackend.converter;
 
-import com.nickleback.boilerplate.domain.Role;
-import com.nickleback.boilerplate.domain.User;
-import com.nickleback.boilerplate.dto.SignUpDto;
-import com.nickleback.boilerplate.repository.RoleRepository;
+import com.nickleback.quartettBackend.domain.Role;
+import com.nickleback.quartettBackend.domain.User;
+import com.nickleback.quartettBackend.dto.SignUpDto;
+import com.nickleback.quartettBackend.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

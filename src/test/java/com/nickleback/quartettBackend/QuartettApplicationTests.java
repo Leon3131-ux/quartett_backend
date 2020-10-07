@@ -1,10 +1,10 @@
-package com.nickleback.boilerplate;
+package com.nickleback.quartettBackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BoilerplateApplicationTests {
+class QuartettApplicationTests {
 
 	@Test
 	void contextLoads() {

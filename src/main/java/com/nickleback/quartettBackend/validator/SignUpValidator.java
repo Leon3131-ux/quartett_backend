@@ -1,8 +1,8 @@
-package com.nickleback.boilerplate.validator;
+package com.nickleback.quartettBackend.validator;
 
-import com.nickleback.boilerplate.domain.User;
-import com.nickleback.boilerplate.dto.SignUpDto;
-import com.nickleback.boilerplate.repository.UserRepository;
+import com.nickleback.quartettBackend.domain.User;
+import com.nickleback.quartettBackend.dto.SignUpDto;
+import com.nickleback.quartettBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
