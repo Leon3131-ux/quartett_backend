@@ -3,6 +3,7 @@ package com.nickleback.boilerplate.controller;
 import com.nickleback.boilerplate.converter.UserConverter;
 import com.nickleback.boilerplate.domain.User;
 import com.nickleback.boilerplate.dto.SignUpDto;
+import com.nickleback.boilerplate.security.SecurityConstants;
 import com.nickleback.boilerplate.service.UserService;
 import com.nickleback.boilerplate.validator.SignUpValidator;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class UserController {
         webDataBinder.setValidator(signUpValidator);
     }
 
-    @RequestMapping(value = "/api/signup", method = RequestMethod.POST)
+    @RequestMapping(value = SecurityConstants.SIGN_UP_URL, method = RequestMethod.POST)
     public ResponseEntity singUpUser(@RequestBody @Validated SignUpDto signUpDto){
         User user = userConverter.singUpDtoToUser(signUpDto);
         userService.save(user);
