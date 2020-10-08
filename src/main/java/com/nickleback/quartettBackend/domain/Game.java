@@ -32,4 +32,7 @@ public class Game{
     @OneToMany
     private List<User> playingUsers;
 
+    @OneToOne
+    private CardDeck cardDeck;
+
 }
