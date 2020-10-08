@@ -14,7 +14,7 @@ public class GameConverter {
     private final UserConverter userConverter;
 
     public GameDto toDto(Game game){
-        return new GameDto(game.getUuid(), game.getPlayingUsers().stream().map(userConverter::toDto).collect(Collectors.toList()));
+        return new GameDto(game.getInviteCode(), game.getPlayingUsers().stream().map(userConverter::toDto).collect(Collectors.toList()));
     }
 
 }
