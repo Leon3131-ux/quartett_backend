@@ -12,8 +12,6 @@ public class GameDto {
 
     private UUID uuid;
 
-    private Long maxPlayers;
-
     private List<UserDto> playingUsers;
 
 }

@@ -26,9 +26,6 @@ public class Game{
     @Column
     private UUID uuid;
 
-    @Column
-    private Long maxPlayers;
-
     @OneToMany
     private List<User> playingUsers;
 

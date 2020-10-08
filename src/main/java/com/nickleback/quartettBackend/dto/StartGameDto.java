@@ -5,8 +5,6 @@ import lombok.Data;
 @Data
 public class StartGameDto {
 
-    private Long maxPlayers;
-
     private Long cardDeckId;
 
 }

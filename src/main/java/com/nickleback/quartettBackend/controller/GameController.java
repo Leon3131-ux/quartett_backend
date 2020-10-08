@@ -1,10 +1,12 @@
 package com.nickleback.quartettBackend.controller;
 
 import com.nickleback.quartettBackend.converter.GameConverter;
+import com.nickleback.quartettBackend.domain.CardDeck;
 import com.nickleback.quartettBackend.domain.Game;
 import com.nickleback.quartettBackend.domain.User;
 import com.nickleback.quartettBackend.dto.GameDto;
 import com.nickleback.quartettBackend.dto.StartGameDto;
+import com.nickleback.quartettBackend.service.CardDeckService;
 import com.nickleback.quartettBackend.service.GameService;
 import com.nickleback.quartettBackend.service.UserService;
 import com.nickleback.quartettBackend.validator.StartGameValidator;
@@ -30,6 +32,7 @@ public class GameController {
     private final GameConverter gameConverter;
     private final StartGameValidator startGameValidator;
     private final UserService userService;
+    private final CardDeckService cardDeckService;
 
     @InitBinder("startGameDto")
     protected void setSingUpDtoInitBinder(WebDataBinder webDataBinder){
@@ -39,11 +42,15 @@ public class GameController {
     @RequestMapping(value = "/api/startGame", method = RequestMethod.POST)
     private ResponseEntity startGame(@RequestBody @Validated StartGameDto startGameDto, Principal principal){
         Optional<User> optionalUser = userService.getByUsername(principal.getName());
+        Optional<CardDeck> optionalCardDeck = cardDeckService.getById(startGameDto.getCardDeckId());
         List<User> playingUsers = new ArrayList<>();
         if(optionalUser.isPresent()){
-            playingUsers.add(optionalUser.get());
-            Game game = new Game(null, startGameDto.getMaxPlayers(), playingUsers);
-            return new ResponseEntity(gameConverter.toDto(gameService.save(game)), HttpStatus.CREATED);
+            if(optionalCardDeck.isPresent()){
+                playingUsers.add(optionalUser.get());
+                Game game = new Game(null, playingUsers, optionalCardDeck.get());
+                return new ResponseEntity(gameConverter.toDto(gameService.save(game)), HttpStatus.CREATED);
+            }
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.FORBIDDEN);
     }

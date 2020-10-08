@@ -26,15 +26,10 @@ public class StartGameValidator implements Validator {
     public void validate(Object target, Errors errors) {
         StartGameDto startGameDto = (StartGameDto) target;
 
-        if(startGameDto.getMaxPlayers() == null){
-            errors.reject("errors.startGameDto.maxPlayers.empty");
-        }
-
         Optional<CardDeck> optionalCardDeck = cardDeckService.getById(startGameDto.getCardDeckId());
         if(optionalCardDeck.isEmpty()){
             errors.reject("errors.startGameDto.cardDeckId.invalid");
         }
-
 
     }
 }
