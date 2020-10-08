@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CardDeck extends AbstractEntity{
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @OneToMany

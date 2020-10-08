@@ -15,7 +15,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class CardImage extends AbstractEntity{
 
-    @Column
+    @Column(nullable = false)
     private String imageName;
 
 }

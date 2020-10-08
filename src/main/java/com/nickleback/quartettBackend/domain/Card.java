@@ -16,25 +16,25 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 public class Card extends AbstractEntity{
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private Long cardIndex;
 
-    @Column
+    @Column(nullable = false)
     private String attribute1;
 
-    @Column
+    @Column(nullable = false)
     private String attribute2;
 
-    @Column
+    @Column(nullable = false)
     private String attribute3;
 
-    @Column
+    @Column(nullable = false)
     private String attribute4;
 
-    @Column
+    @Column(nullable = false)
     private String attribute5;
 
     @OneToOne
