@@ -2,7 +2,7 @@ package com.nickleback.quartettBackend.validator;
 
 import com.nickleback.quartettBackend.domain.User;
 import com.nickleback.quartettBackend.dto.SignUpDto;
-import com.nickleback.quartettBackend.repository.UserRepository;
+import com.nickleback.quartettBackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SignUpValidator implements Validator {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
 
     @Override
@@ -34,7 +34,7 @@ public class SignUpValidator implements Validator {
             errors.reject("errors.signUpDto.password.empty");
         }
 
-        Optional<User> userWithSameName = userRepository.findByUsername(signUpDto.getUsername());
+        Optional<User> userWithSameName = userService.getByUsername(signUpDto.getUsername());
         if(userWithSameName.isPresent()){
             errors.reject("errors.signUpDto.username.alreadyUsed");
         }
