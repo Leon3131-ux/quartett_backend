@@ -2,12 +2,10 @@ package com.nickleback.quartettBackend.service;
 
 import com.nickleback.quartettBackend.domain.CardDeck;
 import com.nickleback.quartettBackend.domain.Game;
-import com.nickleback.quartettBackend.domain.User;
 import com.nickleback.quartettBackend.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
