@@ -32,4 +32,8 @@ public class Game{
     @OneToOne
     private CardDeck cardDeck;
 
+
+    public void addPlayingUser(User user){
+        playingUsers.add(user);
+    }
 }
