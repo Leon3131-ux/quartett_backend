@@ -24,7 +24,7 @@ public class UserConverter {
         List<Role> roles = new ArrayList<>();
         Optional<Role> userRole = roleRepository.findByName("USER");
         userRole.ifPresent(roles::add);
-        return new User(signUpDto.getUsername(), bCryptPasswordEncoder.encode(signUpDto.getPassword()), roles);
+        return new User(signUpDto.getUsername(), bCryptPasswordEncoder.encode(signUpDto.getPassword()), roles, null);
     }
 
     public UserDto toDto(User user){

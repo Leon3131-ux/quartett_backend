@@ -23,7 +23,7 @@ public class GameService {
         return gameRepository.findByInviteCode(inviteCode);
     }
 
-    public Game createGame(CardDeck cardDeck, User user) {
+    public Game createGame(CardDeck cardDeck) {
 
         Long gameInviteCode;
         do {
@@ -32,7 +32,6 @@ public class GameService {
 
         return new Game(
                 gameInviteCode,
-                List.of(user),
                 cardDeck
         );
     }

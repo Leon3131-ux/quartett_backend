@@ -1,6 +1,7 @@
 package com.nickleback.quartettBackend.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 @AllArgsConstructor
 @MappedSuperclass
 @EqualsAndHashCode
+@Data
 public class AbstractEntity {
 
     @Id

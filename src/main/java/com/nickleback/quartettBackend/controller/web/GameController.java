@@ -1,6 +1,7 @@
-package com.nickleback.quartettBackend.controller;
+package com.nickleback.quartettBackend.controller.web;
 
 import com.nickleback.quartettBackend.converter.GameConverter;
+import com.nickleback.quartettBackend.converter.UserConverter;
 import com.nickleback.quartettBackend.domain.CardDeck;
 import com.nickleback.quartettBackend.domain.Game;
 import com.nickleback.quartettBackend.domain.User;
@@ -30,8 +31,10 @@ public class GameController {
         if(cardDeck == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         
         User user = userService.getByUsernameOrThrowException(principal.getName());
-        Game createdGame = gameService.createGame(cardDeck, user);
+        Game createdGame = gameService.createGame(cardDeck);
         Game savedGame = gameService.save(createdGame);
+        user.setGame(savedGame);
+        userService.save(user);
         return new ResponseEntity<>(gameConverter.toDto(savedGame), HttpStatus.CREATED);
     }
 
@@ -42,8 +45,9 @@ public class GameController {
 
         Game game = optionalGame.get();
         User user = userService.getByUsernameOrThrowException(principal.getName());
-        game.addPlayingUser(user);
-        return new ResponseEntity<>(gameConverter.toDto(gameService.save(game)), HttpStatus.OK);
+        user.setGame(game);
+        userService.save(user);
+        return new ResponseEntity<>(gameConverter.toDto(game), HttpStatus.OK);
     }
 
 }
