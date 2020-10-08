@@ -27,10 +27,10 @@ public class UserController {
     }
 
     @RequestMapping(value = SecurityConstants.SIGN_UP_URL, method = RequestMethod.POST)
-    public ResponseEntity singUpUser(@RequestBody @Validated SignUpDto signUpDto){
+    public ResponseEntity<?> singUpUser(@RequestBody @Validated SignUpDto signUpDto){
         User user = userConverter.singUpDtoToUser(signUpDto);
         userService.save(user);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
