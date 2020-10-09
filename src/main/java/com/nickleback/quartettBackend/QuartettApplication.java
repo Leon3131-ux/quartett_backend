@@ -1,5 +1,6 @@
 package com.nickleback.quartettBackend;
 
+import com.nickleback.quartettBackend.util.InviteCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,5 +19,8 @@ public class QuartettApplication {
 	public BCryptPasswordEncoder bCryptPasswordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
+
+	@Bean
+	public InviteCodeGenerator inviteCodeGenerator() {return new InviteCodeGenerator();}
 
 }

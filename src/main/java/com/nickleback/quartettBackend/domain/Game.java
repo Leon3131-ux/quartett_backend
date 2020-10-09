@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -16,7 +15,7 @@ import java.util.List;
 public class Game extends AbstractEntity{
 
     @Column(unique = true, nullable = false)
-    private Long inviteCode;
+    private String inviteCode;
 
     @OneToOne
     private CardDeck cardDeck;

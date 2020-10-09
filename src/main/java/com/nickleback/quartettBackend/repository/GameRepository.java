@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface GameRepository extends JpaRepository<Game, UUID> {
-    Optional<Game> findByInviteCode(Long gameInviteCode);
+    Optional<Game> findByInviteCode(String gameInviteCode);
 }

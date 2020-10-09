@@ -31,7 +31,7 @@ public class GameController {
         if(cardDeck == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         
         User user = userService.getByUsernameOrThrowException(principal.getName());
-        Game createdGame = gameService.createGame(cardDeck);
+        Game createdGame = gameService.createGame(cardDeck, user.getUsername());
         Game savedGame = gameService.save(createdGame);
         user.setGame(savedGame);
         userService.save(user);
@@ -39,7 +39,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/api/joinGame/with/{inviteCode}", method = RequestMethod.POST)
-    public ResponseEntity<GameDto> joinGame(@PathVariable("inviteCode") Long inviteCode, Principal principal){
+    public ResponseEntity<GameDto> joinGame(@PathVariable("inviteCode") String inviteCode, Principal principal){
         Optional<Game> optionalGame = gameService.findByInviteCode(inviteCode);
         if(optionalGame.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 

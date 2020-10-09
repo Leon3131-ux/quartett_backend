@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class GameDto {
 
-    private Long inviteCode;
+    private String inviteCode;
 
     private List<UserDto> playingUsers;
 
