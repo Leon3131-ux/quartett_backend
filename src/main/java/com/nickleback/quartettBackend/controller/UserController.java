@@ -1,4 +1,4 @@
-package com.nickleback.quartettBackend.controller.web;
+package com.nickleback.quartettBackend.controller;
 
 import com.nickleback.quartettBackend.converter.UserConverter;
 import com.nickleback.quartettBackend.domain.User;

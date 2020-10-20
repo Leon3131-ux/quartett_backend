@@ -1,4 +1,4 @@
-package com.nickleback.quartettBackend.controller.web;
+package com.nickleback.quartettBackend.controller;
 
 import org.springframework.stereotype.Controller;
 

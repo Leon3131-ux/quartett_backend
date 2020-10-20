@@ -1,4 +1,4 @@
-package com.nickleback.quartettBackend.controller.web;
+package com.nickleback.quartettBackend.controller;
 
 import com.nickleback.quartettBackend.converter.GameConverter;
 import com.nickleback.quartettBackend.domain.*;
@@ -8,6 +8,7 @@ import com.nickleback.quartettBackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class GameController {
     private final GameService gameService;
     private final UserService userService;
     private final GameConverter gameConverter;
+    private final SimpMessageSendingOperations simpleMessagingTemplate;
     private Map<Game, GameData> gameGameDataMap = new HashMap<>();
 
 
@@ -58,6 +60,11 @@ public class GameController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
+    private void launchGameOverWebsocket(){
+
     }
 
 }
