@@ -10,6 +10,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -72,10 +73,8 @@ public class GameService {
 
     public GameData getGameData(Game game){
         List<User> players = userRepository.findAllByGame_Id(game.getId());
-        List<Card> cardStack = new ArrayList<>();
+        List<Card> cardStack = game.getCardDeck().getCardSets().stream().flatMap(cardSet -> cardSet.getCards().stream()).collect(Collectors.toList());
         Map<User, PlayerData> playerDataMap = new HashMap<>();
-
-        game.getCardDeck().getCardSets().forEach(cardSet -> cardStack.addAll(cardSet.getCards()));
 
         players.forEach(player -> playerDataMap.put(player, new PlayerData(new ArrayList<>())));
 
