@@ -6,6 +6,7 @@ import com.nickleback.quartettBackend.repository.UserRepository;
 import com.nickleback.quartettBackend.util.InviteCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,6 +24,8 @@ public class GameService {
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
     private final InviteCodeGenerator inviteCodeGenerator;
+    private final SimpMessageSendingOperations simpleMessagingTemplate;
+    private final Map<Game, GameData> gameDataMap = new HashMap<>();
 
     public Game save(Game game){return gameRepository.save(game);}
 
@@ -51,9 +54,20 @@ public class GameService {
             game.setStarted(now);
             game.setExpires(now + maxAllowedTime);
             gameRepository.save(game);
+            GameData gameData = getGameData(game);
+            gameDataMap.put(game, gameData);
+            launchGameOverWebsocket(game, gameData);
             return true;
         }
         return false;
+    }
+
+    public void launchGameOverWebsocket(Game game, GameData gameData){
+        List<User> players = gameData.getPlayers();
+        for (User player : players){
+            List<Card> playerCards = gameData.getPlayerDataMap().get(player).getCards();
+            simpleMessagingTemplate.convertAndSendToUser(player.getUsername(),"/launch/" + game.getInviteCode(), playerCards);
+        }
     }
 
     public GameData getGameData(Game game){
@@ -78,11 +92,9 @@ public class GameService {
         Collections.shuffle(cards);
         for(Card card : cards){
             User player = players.get(playerIndex);
-
             PlayerData playerData = playerDataMap.get(player);
             playerData.getCards().add(card);
             playerIndex++;
-
             if(playerIndex == players.size()){
                 playerIndex = 0;
             }
