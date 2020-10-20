@@ -1,20 +1,19 @@
 package com.nickleback.quartettBackend.controller.web;
 
 import com.nickleback.quartettBackend.converter.GameConverter;
-import com.nickleback.quartettBackend.converter.UserConverter;
-import com.nickleback.quartettBackend.domain.CardDeck;
-import com.nickleback.quartettBackend.domain.Game;
-import com.nickleback.quartettBackend.domain.User;
+import com.nickleback.quartettBackend.domain.*;
 import com.nickleback.quartettBackend.dto.GameDto;
 import com.nickleback.quartettBackend.service.GameService;
 import com.nickleback.quartettBackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -25,6 +24,9 @@ public class GameController {
     private final GameService gameService;
     private final UserService userService;
     private final GameConverter gameConverter;
+    private final SimpMessageSendingOperations simpMessagingTemplate;
+    private Map<Game, GameData> gameGameDataMap;
+
 
     @RequestMapping(value = "/api/startGame/with/{cardDeckId}", method = RequestMethod.POST)
     public ResponseEntity<GameDto> startGamePath(@PathVariable("cardDeckId") CardDeck cardDeck, Principal principal){
@@ -49,5 +51,17 @@ public class GameController {
         userService.save(user);
         return new ResponseEntity<>(gameConverter.toDto(game), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/api/launchGame/with/{gameId}", method = RequestMethod.POST)
+    public ResponseEntity<?> launchGame(@PathVariable("gameId") Game game){
+        gameService.launchGame(game);
+        launchGameOverWebsocket(game);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private void launchGameOverWebsocket(Game game){
+        simpMessagingTemplate.convertAndSend("/websocket/launchGame/" + game.getId(), "Game started");
+    }
+
 
 }
