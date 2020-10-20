@@ -8,11 +8,11 @@ import com.nickleback.quartettBackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,8 +24,7 @@ public class GameController {
     private final GameService gameService;
     private final UserService userService;
     private final GameConverter gameConverter;
-    private final SimpMessageSendingOperations simpMessagingTemplate;
-    private Map<Game, GameData> gameGameDataMap;
+    private Map<Game, GameData> gameGameDataMap = new HashMap<>();
 
 
     @RequestMapping(value = "/api/startGame/with/{cardDeckId}", method = RequestMethod.POST)
@@ -54,14 +53,11 @@ public class GameController {
 
     @RequestMapping(value = "/api/launchGame/with/{gameId}", method = RequestMethod.POST)
     public ResponseEntity<?> launchGame(@PathVariable("gameId") Game game){
-        gameService.launchGame(game);
-        launchGameOverWebsocket(game);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if(gameService.launchGame(game)){
+            gameGameDataMap.put(game, gameService.getGameData(game));
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
-    private void launchGameOverWebsocket(Game game){
-        simpMessagingTemplate.convertAndSend("/websocket/launchGame/" + game.getId(), "Game started");
-    }
-
 
 }

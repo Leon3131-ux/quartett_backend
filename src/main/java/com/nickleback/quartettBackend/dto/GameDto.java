@@ -13,6 +13,4 @@ public class GameDto {
     private String inviteCode;
 
     private List<UserDto> playingUsers;
-
-    private Long remainingTime;
 }

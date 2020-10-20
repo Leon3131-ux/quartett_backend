@@ -15,7 +15,7 @@ public class GameTestDataProvider {
     private final GameRepository gameRepository;
 
     public Game create(String inviteCode, CardDeck cardDeck){
-        return gameRepository.save(new Game(inviteCode, cardDeck));
+        return gameRepository.save(new Game(inviteCode, null, null, cardDeck));
     }
 
     public Game create(){

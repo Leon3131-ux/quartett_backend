@@ -1,7 +1,6 @@
 package com.nickleback.quartettBackend.service;
 
 import com.nickleback.quartettBackend.domain.*;
-import com.nickleback.quartettBackend.repository.CardRepository;
 import com.nickleback.quartettBackend.repository.GameRepository;
 import com.nickleback.quartettBackend.repository.UserRepository;
 import com.nickleback.quartettBackend.util.InviteCodeGenerator;
@@ -16,13 +15,12 @@ import java.util.*;
 public class GameService {
 
     @Value("${game.inviteCode.strength}")
-    private final Integer inviteCodeStrength;
+    private Integer inviteCodeStrength;
 
     @Value("${game.maxTime}")
-    private final Long maxAllowedTime;
+    private Long maxAllowedTime;
 
     private final GameRepository gameRepository;
-    private final CardRepository cardRepository;
     private final UserRepository userRepository;
     private final InviteCodeGenerator inviteCodeGenerator;
 
@@ -46,12 +44,16 @@ public class GameService {
         );
     }
 
-    public void launchGame(Game game){
-        Long now = new Date().getTime();
-        game.setStarted(now);
-        game.setExpires(now + maxAllowedTime);
-        gameRepository.save(game);
-
+    public boolean launchGame(Game game){
+        int amountOfPlayers = userRepository.findAllByGame_Id(game.getId()).size();
+        if(amountOfPlayers >= 2){
+            Long now = new Date().getTime();
+            game.setStarted(now);
+            game.setExpires(now + maxAllowedTime);
+            gameRepository.save(game);
+            return true;
+        }
+        return false;
     }
 
     public GameData getGameData(Game game){
@@ -66,7 +68,7 @@ public class GameService {
         if(players.size() > 2){
             return getGameDataNoCardStack(cardStack, players, playerDataMap);
         }else{
-
+            return getGameDataWithCardStack(cardStack, players, playerDataMap);
         }
     }
 
@@ -89,20 +91,19 @@ public class GameService {
     }
 
     private GameData getGameDataWithCardStack(List<Card> cards, List<User> players, Map<User, PlayerData> playerDataMap){
-        int playerIndex = 0;
-
         Collections.shuffle(cards);
+        List<Card> playerCards = new ArrayList<>();
         for(User player : players){
-            PlayerData playerData = playerDataMap.get(player);
-            playerData.getCards().add(card);
-            playerIndex++;
-
-            if(playerIndex == players.size()){
-                playerIndex = 0;
+            for(int i = 0; i < 10; i++){
+                Card card = cards.get(i);
+                PlayerData playerData = playerDataMap.get(player);
+                playerData.getCards().add(card);
+                playerCards.add(card);
             }
-            cards.remove(card);
+            cards.removeAll(playerCards);
+            playerCards = new ArrayList<>();
         }
-        return playerDataMap;
+        return new GameData(cards, players, playerDataMap);
     }
 
 

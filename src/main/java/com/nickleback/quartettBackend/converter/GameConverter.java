@@ -18,9 +18,8 @@ public class GameConverter {
     private final UserRepository userRepository;
 
     public GameDto toDto(Game game){
-        Long remainingTime = game.getExpires() - game.getStarted();
         List<UserDto> users = userRepository.findAllByGame_Id(game.getId()).stream().map(userConverter::toDto).collect(Collectors.toList());
-        return new GameDto(game.getId(), game.getInviteCode(), users, remainingTime);
+        return new GameDto(game.getId(), game.getInviteCode(), users);
     }
 
 }
