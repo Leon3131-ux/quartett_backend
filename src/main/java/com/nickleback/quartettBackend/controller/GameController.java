@@ -28,6 +28,9 @@ public class GameController {
     private final GameService gameService;
     private final UserService userService;
     private final GameConverter gameConverter;
+    private final SimpMessageSendingOperations simpleMessagingTemplate;
+    private final Map<Game, GameData> gameGameDataMap = new HashMap<>();
+
 
     @RequestMapping(value = "/api/startGame/with/{cardDeckId}", method = RequestMethod.POST)
     public ResponseEntity<GameDto> startGamePath(@PathVariable("cardDeckId") CardDeck cardDeck, Principal principal){
@@ -54,14 +57,27 @@ public class GameController {
     }
 
     @RequestMapping(value = "/api/launchGame/with/{inviteCode}", method = RequestMethod.POST)
-    public ResponseEntity<?> launchGame(@PathVariable("inviteCode") String inviteCode){
+    public ResponseEntity<?> launchGame(@PathVariable("inviteCode") String inviteCode, Principal principal){
         Optional<Game> optionalGame = gameService.findByInviteCode(inviteCode);
         if(optionalGame.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         Game game = optionalGame.get();
         if(gameService.launchGame(game)){
+            gameGameDataMap.put(game, gameService.getGameData(game));
+            launchGameOverWebsocket(game);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
+    public void launchGameOverWebsocket(Game game){
+        GameData gameData = gameGameDataMap.get(game);
+        List<User> players = gameData.getPlayers();
+        for (User player : players){
+            List<Card> playerCards = gameData.getPlayerDataMap().get(player).getCards();
+            simpleMessagingTemplate.convertAndSendToUser(player.getUsername(),"/launch/" + game.getInviteCode(), playerCards);
+        }
+    }
+
 }
