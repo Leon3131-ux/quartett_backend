@@ -62,7 +62,7 @@ public class GameService {
         List<Card> cardStack = game.getCardDeck().getCardSets().stream().flatMap(cardSet -> cardSet.getCards().stream()).collect(Collectors.toList());
         Map<User, PlayerData> playerDataMap = new HashMap<>();
 
-        players.forEach(player -> playerDataMap.put(player, new PlayerData(new ArrayList<>())));
+        players.forEach(player -> playerDataMap.put(player, new PlayerData(new ArrayList<>(), new ArrayList<>())));
 
         if(players.size() > 2){
             return getGameDataNoCardStack(cardStack, players, playerDataMap);
@@ -104,6 +104,5 @@ public class GameService {
         }
         return new GameData(cards, players, playerDataMap);
     }
-
 
 }

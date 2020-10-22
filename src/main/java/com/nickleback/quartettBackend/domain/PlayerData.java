@@ -13,4 +13,6 @@ public class PlayerData {
 
     List<Card> cards;
 
+    List<CardSet> completedCardSets;
+
 }

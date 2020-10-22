@@ -1,19 +1,15 @@
 package com.nickleback.quartettBackend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Card extends AbstractEntity{
 
     @Column(nullable = false)
@@ -40,4 +36,7 @@ public class Card extends AbstractEntity{
     @OneToOne
     private CardImage cardImage;
 
+    @ManyToOne
+    @JoinColumn(name="cardSet_id", nullable=false)
+    private CardSet cardSet;
 }
